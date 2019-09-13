@@ -94,6 +94,8 @@ class SortingRobot:
 
     def sort(self):
         """
+        OLD PLAN I HAD
+        ------------------
         The robot is capable of moving left and right inside the list.
         The robot is capable of comparing an item he's holding vs the item he's looking at.
         The robot can swap items.
@@ -105,46 +107,104 @@ class SortingRobot:
             Go back through the list in the opposite direction, this time comparing in an opposite fashion
                 if the item is smaller than the one in the robot's hand, swap it.
         
+        -------------------------------------------
+
+        The robot starts at position 0.
+        Pick up the initial item.
+
+        While the robot can move right, move him right.
+
+            If the item he has is larger, swap the item.
+                At this point, there's actually "None" in the position behind. 
+                Move left, swap items with "None" (basically, the robot's hand is empty)
+                Move back to the right, and swap "None" with the new card
+            
+            If the item has has is smaller, you want to place the card back down and pick up the new card:
+                Move back to the left and "swap" the item with "None"
+                Move back to the right and swap None with the new highest card
+        
+        Once the robot can not move right anymore, he is at the end of the array
+        NEED A WAY TO TELL IF THE ROBOT HAS FINISHED MOVING ALL THE WAY RIGHT -- the robot's light
+            The last item in the array will be a "None" because he just swapped with that position.
+            Swap again with "None" so the robot's hand is empty.
+            Move the robot all the way back to the beginning of the array
+            While the robot can move left
+                Move left until he can't move left anymore
+            Reset the light
+            RECURSION
+            
+
+
+        ------------------------------------------------
         
         If the held item's value is greater, return 1.
         If the held item's value is less, return -1.
         If the held item's value is equal, return 0.
         If either item is None, return None.
+
         """
         self.swap_item()
         # self.set_light_on()
 
         while self.can_move_right():
             self.move_right()
-            # print("Line 118: Moving right!")
+             # self.set_light_on()
+
             if self.compare_item() == 1:
+                self.set_light_on()
                 self.swap_item()
                 self.move_left()
                 self.swap_item()
                 self.move_right()
                 self.swap_item()
-            elif self.compare_item() == -1:
+            else:
                 self.move_left()
                 self.swap_item()
                 self.move_right()
                 self.swap_item()
+
+            # continue
+            # break
+            
         else:
-            while self.can_move_left():
-                self.move_left()
-                # print("Line 133: Moving left!")
-                self.swap_item()
-                self.move_left()
-            if self.compare_item() == -1:
-                self.swap_item()
-                self.move_right()
-                self.swap_item()
-                self.move_left()
-                self.swap_item()
-            elif self.compare_item() == 1:
-                self.move_right()
-                self.swap_item()
-                self.move_left()
-                self.swap_item()
+            self.swap_item()
+            if self.light_is_on():
+                while self.can_move_left():
+                    self.move_left()
+                self.set_light_off()
+                self.sort() # ACTS AS A RESET, BINGO
+
+        # while self.can_move_right():
+        #     self.move_right()
+        #     # print("Line 118: Moving right!")
+        #     if self.compare_item() == 1:
+        #         self.swap_item()
+        #         self.move_left()
+        #         self.swap_item()
+        #         self.move_right()
+        #         self.swap_item()
+        #     elif self.compare_item() == -1:
+        #         self.move_left()
+        #         self.swap_item()
+        #         self.move_right()
+        #         self.swap_item()
+        # else:
+        #     while self.can_move_left():
+        #         self.move_left()
+        #         # print("Line 133: Moving left!")
+        #         self.swap_item()
+        #         self.move_left()
+        #     if self.compare_item() == -1:
+        #         self.swap_item()
+        #         self.move_right()
+        #         self.swap_item()
+        #         self.move_left()
+        #         self.swap_item()
+        #     elif self.compare_item() == 1:
+        #         self.move_right()
+        #         self.swap_item()
+        #         self.move_left()
+        #         self.swap_item()
     
         # while self.can_move_left():
         #     self.move_left()
