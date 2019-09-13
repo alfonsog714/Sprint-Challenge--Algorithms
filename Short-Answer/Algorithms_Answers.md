@@ -14,7 +14,7 @@ Notes for self ---
 n = total number of floors
 f = floor number where eggs begin to break
 
-## GOAL: Determine the value of F so that the number of dropped + broken eggs is as small as possible
+GOAL: Determine the value of F so that the number of dropped + broken eggs is as small as possible
 
 Keep track of the floor we're currently on.
 Keep track of how many eggs have been dropped so far.
