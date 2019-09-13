@@ -16,11 +16,11 @@ def count_th(word, count = 0):
 
     if word[0] == "t" and word[1] == "h":
         count += 1
-        print(f"Line 21: {new_string}")
+        # print(f"Line 21: {new_string}")
         return count_th(new_string, count)
     elif word[0] != "t":
         new_string = word[1:]
-        print(f"Line 24: {new_string}")
+        # print(f"Line 24: {new_string}")
         return count_th(new_string, count)
 
     else:
